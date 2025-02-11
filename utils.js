@@ -9,4 +9,15 @@ function createEnvelope(title, budget) {
     }
 }
 
-export {createEnvelope}
+function findEnvelope(id, array) {
+    let specificEnvelope
+    const findSpecificEnvelope = array.filter(envelope => {
+        if (envelope.id === id) {
+            specificEnvelope = envelope
+        }
+    })
+
+    return specificEnvelope
+}
+
+export { createEnvelope, findEnvelope }

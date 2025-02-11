@@ -1,5 +1,5 @@
 import express from 'express'
-import { createEnvelope } from './utils.js'
+import { createEnvelope, findEnvelope } from './utils.js'
 const app = express()
 
 const PORT = process.env.PORT || 3000
@@ -17,6 +17,13 @@ app.use(express.json());
 
 app.get('/personal-budget', (req, res) => {
     res.send(envelopes)
+})
+
+app.get('/personal-budget/:id', (req, res) => {
+    const id = Number(req.params.id)
+    const specificEnvelope = findEnvelope(id, envelopes)
+    
+    res.send(specificEnvelope)
 })
 
 app.post('/personal-budget', (req, res) => {
