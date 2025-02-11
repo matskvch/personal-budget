@@ -1,5 +1,5 @@
 import express from 'express'
-import { createEnvelope, findEnvelope } from './utils.js'
+import { createEnvelope, findEnvelope, changeEnvelope } from './utils.js'
 const app = express()
 
 const PORT = process.env.PORT || 3000
@@ -34,6 +34,16 @@ app.post('/personal-budget', (req, res) => {
     envelopes.push(newEnvelop)
 
     res.status(201).send(newEnvelop)
+})
+
+app.post('/personal-budget/:id/changes', (req, res) => {
+    // Sends request body: { amount: 500 } <- example
+    const id = Number(req.params.id)
+    const newTitle = req.body.newTitle
+    const amount = req.body.amount
+
+    const updatedEnvelope = changeEnvelope(id, envelopes, newTitle, amount)
+    res.send(updatedEnvelope)
 })
 
 app.listen(PORT, () => {

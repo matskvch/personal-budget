@@ -20,4 +20,20 @@ function findEnvelope(id, array) {
     return specificEnvelope
 }
 
-export { createEnvelope, findEnvelope }
+function changeEnvelope(id, array, newTitle, amount) {
+    const envelope = findEnvelope(id, array);
+
+    if (envelope) {
+        if (newTitle) {
+            envelope.title = newTitle;
+        }
+
+        if (amount >= 0) {
+            envelope.budget -= amount;
+        }
+    }
+
+    return envelope;
+}
+
+export { createEnvelope, findEnvelope, changeEnvelope }
