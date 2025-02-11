@@ -13,13 +13,15 @@ const envelopes = [
     }
 ]
 
+app.use(express.json());
+
 app.get('/personal-budget', (req, res) => {
-    res.send('Hello TEST!')
+    res.send(envelopes)
 })
 
 app.post('/personal-budget', (req, res) => {
-    const title = req.query.title
-    const budget = req.query.budget
+    const title = req.body.title
+    const budget = req.body.budget
     
     const newEnvelop = createEnvelope(title, budget)
     envelopes.push(newEnvelop)
@@ -30,3 +32,4 @@ app.post('/personal-budget', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
 })
+
