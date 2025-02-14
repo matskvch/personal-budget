@@ -1,5 +1,11 @@
 import express from 'express'
-import { createEnvelope, findEnvelope, changeEnvelope, deleteEnvelope } from './utils.js'
+import {
+    createEnvelope,
+    findEnvelope,
+    changeEnvelope,
+    deleteEnvelope,
+    transferBudget,
+} from "./utils.js";
 const app = express()
 
 const PORT = process.env.PORT || 3000
@@ -51,6 +57,29 @@ app.delete('/personal-budget/:id', (req, res) => {
     deleteEnvelope(id, envelopes)
 
     res.status(200).send(envelopes)
+})
+
+app.post('/personal-budget/transfer', (req, res) => {
+/* 
+{
+    "fromEnvelopeId": 2,
+    "toEnvelopeId": 3,
+    "amount": 500
+} <- пример body
+ */
+    const fromEnvelopeId = req.body.fromEnvelopeId
+    const toEnvelopeId = req.body.toEnvelopeId
+    const amount = req.body.amount
+
+    transferBudget(fromEnvelopeId, toEnvelopeId, amount, envelopes)
+
+    const fromEnvelope = findEnvelope(fromEnvelopeId, envelopes)
+    const toEnvelope = findEnvelope(toEnvelopeId, envelopes)
+
+    res.status(200).send({
+        from: fromEnvelope,
+        to: toEnvelope
+    })
 })
 
 app.listen(PORT, () => {

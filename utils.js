@@ -43,4 +43,18 @@ function changeEnvelope(id, array, newTitle, amount) {
     return envelope;
 }
 
-export { createEnvelope, findEnvelope, changeEnvelope, deleteEnvelope }
+function transferBudget(fromEnvelopeId, toEnvelopeId, amount, array) {
+    const fromEnvelope = findEnvelope(fromEnvelopeId, array)
+    const toEnvelope = findEnvelope(toEnvelopeId, array)
+
+    fromEnvelope.budget -= amount
+    toEnvelope.budget += amount
+}
+
+export {
+    createEnvelope,
+    findEnvelope,
+    changeEnvelope,
+    deleteEnvelope,
+    transferBudget,
+};
