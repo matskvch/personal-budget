@@ -1,5 +1,5 @@
 import express from 'express'
-import { createEnvelope, findEnvelope, changeEnvelope } from './utils.js'
+import { createEnvelope, findEnvelope, changeEnvelope, deleteEnvelope } from './utils.js'
 const app = express()
 
 const PORT = process.env.PORT || 3000
@@ -44,6 +44,13 @@ app.post('/personal-budget/:id/changes', (req, res) => {
 
     const updatedEnvelope = changeEnvelope(id, envelopes, newTitle, amount)
     res.send(updatedEnvelope)
+})
+
+app.delete('/personal-budget/:id', (req, res) => {
+    const id = Number(req.params.id)
+    deleteEnvelope(id, envelopes)
+
+    res.status(200).send(envelopes)
 })
 
 app.listen(PORT, () => {

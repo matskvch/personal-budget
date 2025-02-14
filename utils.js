@@ -20,6 +20,13 @@ function findEnvelope(id, array) {
     return specificEnvelope
 }
 
+function deleteEnvelope(id, array) {
+    const findId = (element) => element.id === id;
+    const findIndex = array.findIndex(findId)
+
+    array.splice(findIndex, 1)
+}
+
 function changeEnvelope(id, array, newTitle, amount) {
     const envelope = findEnvelope(id, array);
 
@@ -36,4 +43,4 @@ function changeEnvelope(id, array, newTitle, amount) {
     return envelope;
 }
 
-export { createEnvelope, findEnvelope, changeEnvelope }
+export { createEnvelope, findEnvelope, changeEnvelope, deleteEnvelope }
